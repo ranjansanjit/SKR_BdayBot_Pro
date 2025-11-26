@@ -24,10 +24,10 @@ pipeline {
             steps {
                 dir('app/backend') {
                     script {
-                        sh """
+                        sh '''
                             docker build -t ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest .
                             docker tag ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest ${REGISTRY_URL}/skr/${IMAGE_NAME}:${IMAGE_TAG}
-                        """
+                        '''
                     }
                 }
             }
@@ -37,15 +37,14 @@ pipeline {
             steps {
                 dir('app/frontend') {
                     script {
-                        sh """
+                        sh '''
                             docker build -t ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest .
                             docker tag ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:${IMAGE_TAG}
-                        """
+                        '''
                     }
                 }
             }
         }
-
 
         stage('Login to Harbor') {
             steps {
