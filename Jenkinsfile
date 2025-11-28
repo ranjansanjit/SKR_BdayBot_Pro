@@ -12,8 +12,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: "https://github.com/ranjansanjit/SKR_BdayBot_Pro/blob/main/Jenkinsfile"
-
+                git branch: 'main', url: "https://github.com/ranjansanjit/SKR_BdayBot_Pro.git"
             }
         }
 
@@ -28,6 +27,17 @@ pipeline {
             }
         }
 
+        stage('Build Frontend Image') {
+            steps {
+                dir('app/frontend') {
+                    sh """
+                        docker build -t ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest .
+                        docker tag ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:${IMAGE_TAG}
+                    """
+                }
+            }
+        }
+
         stage('Push Docker Images') {
             steps {
                 sh "docker push ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest"
@@ -36,7 +46,7 @@ pipeline {
                 sh "docker push ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
-    
+    }
 
     post {
         success {
@@ -44,13 +54,6 @@ pipeline {
         }
         failure {
             echo "Build FAILED for SKR_BdayBot_Pro #${env.BUILD_NUMBER}"
-         }
-     }
-   }
- }  
+        }
+    }
 }
-
-
-    
-    
-    
