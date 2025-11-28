@@ -12,7 +12,8 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/ranjansanjit/SKR_BdayBot_Pro.git'
+                git branch: 'main', url: "https://github.com/ranjansanjit/SKR_BdayBot_Pro/blob/main/Jenkinsfile"
+
             }
         }
 
@@ -36,7 +37,7 @@ pipeline {
                     """
                 }
             }
-        } }
+        } 
 
         stage('Push Docker Images') {
             steps {
