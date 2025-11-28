@@ -28,17 +28,6 @@ pipeline {
             }
         }
 
-        stage('Build Frontend Image') {
-            steps {
-                dir('app/frontend') {
-                    sh """
-                        docker build -t ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest .
-                        docker tag ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:${IMAGE_TAG}
-                    """
-                }
-            }
-        } 
-
         stage('Push Docker Images') {
             steps {
                 sh "docker push ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest"
@@ -47,7 +36,7 @@ pipeline {
                 sh "docker push ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
-    }
+    
 
     post {
         success {
