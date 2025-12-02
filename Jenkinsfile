@@ -18,24 +18,26 @@ pipeline {
 
         stage('Build Backend Image') {
             steps {
-                // Change directory to actual backend folder
                 dir('backend') { 
-                    sh """
-                        docker build -t ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest .
-                        docker tag ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest ${REGISTRY_URL}/skr/${IMAGE_NAME}:${IMAGE_TAG}
-                    """
+                    timeout(time: 15, unit: 'MINUTES') { // Timeout to prevent agent disconnect
+                        sh """
+                            docker build -t ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest .
+                            docker tag ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest ${REGISTRY_URL}/skr/${IMAGE_NAME}:${IMAGE_TAG}
+                        """
+                    }
                 }
             }
         }
 
         stage('Build Frontend Image') {
             steps {
-                // Change directory to actual frontend folder
                 dir('frontend') { 
-                    sh """
-                        docker build -t ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest .
-                        docker tag ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:${IMAGE_TAG}
-                    """
+                    timeout(time: 20, unit: 'MINUTES') { // Timeout increased for frontend builds
+                        sh """
+                            docker build -t ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest .
+                            docker tag ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:${IMAGE_TAG}
+                        """
+                    }
                 }
             }
         }
