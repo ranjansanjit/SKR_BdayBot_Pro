@@ -6,6 +6,7 @@ pipeline {
         IMAGE_NAME = 'skr-backend'
         FRONTEND_IMAGE_NAME = 'skr-frontend'
         IMAGE_TAG = "v${BUILD_NUMBER}"
+        DOCKER_BUILDKIT = '1'
     }
 
     stages {
