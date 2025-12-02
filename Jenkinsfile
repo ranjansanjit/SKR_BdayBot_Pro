@@ -18,7 +18,8 @@ pipeline {
 
         stage('Build Backend Image') {
             steps {
-                dir('app/backend') {
+                // Change directory to actual backend folder
+                dir('backend') { 
                     sh """
                         docker build -t ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest .
                         docker tag ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest ${REGISTRY_URL}/skr/${IMAGE_NAME}:${IMAGE_TAG}
@@ -29,7 +30,8 @@ pipeline {
 
         stage('Build Frontend Image') {
             steps {
-                dir('app/frontend') {
+                // Change directory to actual frontend folder
+                dir('frontend') { 
                     sh """
                         docker build -t ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest .
                         docker tag ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:${IMAGE_TAG}
