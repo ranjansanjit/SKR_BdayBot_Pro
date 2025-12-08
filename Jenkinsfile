@@ -13,12 +13,12 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'main', url: "https://github.com/ranjansanjit/SKR_BdayBot_Pro"
-
             }
         }
 
         stage('Build Backend Image') {
             steps {
+
                 dir('app/backend') {
                     sh """
                         echo "Building Backend Docker Image..."
@@ -27,6 +27,7 @@ pipeline {
                     //     docker build -t ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest .
                     //     docker tag ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest ${REGISTRY_URL}/skr/${IMAGE_NAME}:${IMAGE_TAG}
                     // """
+
                 }
             }
         }
@@ -51,4 +52,5 @@ pipeline {
             echo "Build FAILED for SKR_BdayBot_Pro #${env.BUILD_NUMBER}"
         }
     }
+}
 }
