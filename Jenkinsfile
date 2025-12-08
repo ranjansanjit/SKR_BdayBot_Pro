@@ -18,31 +18,20 @@ pipeline {
 
         stage('Build Backend Image') {
             steps {
-
                 dir('app/backend') {
                     sh """
                         echo "Building Backend Docker Image..."
                     """
-                    // sh """
-                    //     docker build -t ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest .
-                    //     docker tag ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest ${REGISTRY_URL}/skr/${IMAGE_NAME}:${IMAGE_TAG}
-                    // """
-
                 }
             }
         }
 
         stage('Push Docker Images') {
             steps {
-
                 echo "Pushing Docker Images to ${REGISTRY_URL}..."
-                // sh "docker push ${REGISTRY_URL}/skr/${IMAGE_NAME}:latest"
-                // sh "docker push ${REGISTRY_URL}/skr/${IMAGE_NAME}:${IMAGE_TAG}"
-                // sh "docker push ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:latest"
-                // sh "docker push ${REGISTRY_URL}/skr/${FRONTEND_IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
-    
+    }
 
     post {
         success {
@@ -53,4 +42,4 @@ pipeline {
         }
     }
 }
-}
+
